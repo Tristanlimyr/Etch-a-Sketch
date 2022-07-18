@@ -3,16 +3,21 @@ let defaultColor = "rgb(255,255,255)";
 let drawColor = `${document.querySelector('input').value}`;
 let shade = "rgb(255,217,119)";
 let backgroundColor = "rgb(255, 244, 234)";
-let gridSize = 16;
+let gridSize = getGridSize();
 let mouseDown = false;
-const container = document.querySelector(".container");
+const box = document.querySelector('.box');
+let container = document.querySelector('.container');
 const resetButton = document.querySelector('.reset');
 const eraserButton = document.querySelector('.eraser');
 const drawButton = document.querySelector('.draw');
-const colorPicker = document.querySelector('input');
+const colorPicker = document.querySelector('#color-dropper');
+const gridSizeForm = document.querySelector('#grid-size-form');
 
 // creating divs for grid
 function createGrid(gridSize) {
+    box.removeChild(container);
+    container = document.createElement('div');
+    container.classList.add('container');
     for (let i = 0; i < gridSize; i++) {
         let row = document.createElement('div');
         row.classList.add('row');
@@ -23,6 +28,8 @@ function createGrid(gridSize) {
         }
         container.appendChild(row);
     }
+    box.appendChild(container);
+
 }
 createGrid(gridSize);
 draw();
@@ -125,5 +132,18 @@ function watchColorPicker(e) {
 }
 
 // grid size
+gridSizeForm.addEventListener("change", changeGridSize);
 
+function changeGridSize(e) {
 
+    location.reload();
+}
+
+function getGridSize() {
+    let n = document.querySelector("#grid-size-form").value;
+    if (Number(n) != NaN) {
+        if (Number(n) <= 128 && Number(n) >= 1) {
+            return n;
+        }
+    }
+}

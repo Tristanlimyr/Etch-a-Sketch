@@ -82,7 +82,7 @@ img {
     padding: 0;
 }
 
-input {
+#color-dropper {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -93,10 +93,23 @@ input {
     cursor: pointer;
 }
 
-input::-webkit-color-swatch {
+#color-dropper::-webkit-color-swatch {
     border-radius: 50%;
 }
 
-input::-moz-color-swatch {
+#color-dropper::-moz-color-swatch {
     border-radius: 50%;
+}
+
+#grid-size-form {
+    appearance: none;
+    height: 70px;
+    width: 70px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 32px;
+    text-align: center;
+    background-color: rgb(255, 217, 119);
+    font-family: 'Space Mono', monospace;
 }
