@@ -1,12 +1,15 @@
 // variables
 let defaultColor = "rgb(255,255,255)";
-let drawColor = "rgb(0,0,0)";
-let gridSize = 64;
+let drawColor = `${document.querySelector('input').value}`;
+let shade = "rgb(255,217,119)";
+let backgroundColor = "rgb(255, 244, 234)";
+let gridSize = 16;
 let mouseDown = false;
 const container = document.querySelector(".container");
 const resetButton = document.querySelector('.reset');
 const eraserButton = document.querySelector('.eraser');
 const drawButton = document.querySelector('.draw');
+const colorPicker = document.querySelector('input');
 
 // creating divs for grid
 function createGrid(gridSize) {
@@ -22,6 +25,7 @@ function createGrid(gridSize) {
     }
 }
 createGrid(gridSize);
+draw();
 
 // draw
 drawButton.addEventListener('click', draw);
@@ -53,6 +57,8 @@ function pen(e) {
 }
 
 function draw(e) {
+    drawButton.style.backgroundColor = shade;
+    eraserButton.style.backgroundColor = backgroundColor;
     mouseDown = false;
     let grids = document.querySelectorAll('.grid');
     grids.forEach((grid) => {
@@ -86,6 +92,8 @@ function eraser(e) {
 }
 
 function erase(e) {
+    drawButton.style.backgroundColor = backgroundColor;
+    eraserButton.style.backgroundColor = shade;
     mouseDown = false;
     let grids = document.querySelectorAll('.grid');
     grids.forEach((grid) => {
@@ -109,4 +117,13 @@ function reset() {
     });
 }
 
+// color
+colorPicker.addEventListener("change", watchColorPicker);
+
+function watchColorPicker(e) {
+    drawColor = `${e.target.value}`;
+}
+
 // grid size
+
+
