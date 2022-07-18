@@ -3,10 +3,11 @@ let defaultColor = "rgb(255,255,255)";
 let drawColor = `${document.querySelector('input').value}`;
 let shade = "rgb(255,217,119)";
 let backgroundColor = "rgb(255, 244, 234)";
+let previousGridSize = 16;
 let gridSize = getGridSize();
 let mouseDown = false;
 const box = document.querySelector('.box');
-let container = document.querySelector('.container');
+let container;
 const resetButton = document.querySelector('.reset');
 const eraserButton = document.querySelector('.eraser');
 const drawButton = document.querySelector('.draw');
@@ -15,7 +16,6 @@ const gridSizeForm = document.querySelector('#grid-size-form');
 
 // creating divs for grid
 function createGrid(gridSize) {
-    box.removeChild(container);
     container = document.createElement('div');
     container.classList.add('container');
     for (let i = 0; i < gridSize; i++) {
@@ -28,10 +28,11 @@ function createGrid(gridSize) {
         }
         container.appendChild(row);
     }
-    box.appendChild(container);
-
+    return container
 }
-createGrid(gridSize);
+
+// default load grid
+box.appendChild(createGrid(gridSize));
 draw();
 
 // draw
@@ -135,8 +136,18 @@ function watchColorPicker(e) {
 gridSizeForm.addEventListener("change", changeGridSize);
 
 function changeGridSize(e) {
-
-    location.reload();
+    let newGridSize = getGridSize();
+    previousGridSize = gridSize;
+    if (newGridSize == null) {
+        // invalid input no change to gridSize;
+        gridSizeForm.value = `${previousGridSize}`;
+    }
+    else {
+        box.removeChild(container);
+        gridSize = newGridSize;
+        box.appendChild(createGrid(gridSize));
+        draw();
+    }
 }
 
 function getGridSize() {
