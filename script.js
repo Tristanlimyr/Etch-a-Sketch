@@ -1,7 +1,13 @@
 // variables
-const defaultColor = 'grey';
-const drawColor = 'black';
+let defaultColor = "rgb(255,255,255)";
+let drawColor = "rgb(0,0,0)";
+let gridSize = 16;
+let mouseDown = false;
 const container = document.querySelector(".container");
+const resetButton = document.querySelector('.reset');
+const eraserButton = document.querySelector('.eraser');
+const drawButton = document.querySelector('.draw');
+let tool = draw; // default is draw
 
 // creating divs for grid
 function createGrid(gridSize) {
@@ -17,12 +23,9 @@ function createGrid(gridSize) {
         container.appendChild(row);
     }
 }
-createGrid(64);
+createGrid(gridSize);
 
-// hover effect
-let mouseDown = false;
-
-// drawing
+// draw
 function penDown(e) {
     mouseDown = true;
     e.target.style.backgroundColor = drawColor;
@@ -42,5 +45,20 @@ function draw(e) {
             e.target.style.backgroundColor = defaultColor;
         }
     });
+    if (mouseDown) {
+        e.target.classList.add('clicked');
+    }
 }
 
+// reset
+resetButton.addEventListener('click', reset);
+
+function reset() {
+    let grids = document.querySelectorAll('.grid');
+    grids.forEach((grid) => {
+        grid.style.backgroundColor = defaultColor;
+    });
+}
+
+
+// grid size
