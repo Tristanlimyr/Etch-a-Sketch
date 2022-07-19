@@ -49,6 +49,7 @@ function penUp(e) {
 }
 
 function hover(e) {
+    e.target.style.backgroundColor = drawColor;
     if ((!mouseDown) && (!e.target.classList.contains('clicked'))) {
         e.target.style.backgroundColor = defaultColor;
     }
@@ -105,6 +106,7 @@ function erase(e) {
     mouseDown = false;
     let grids = document.querySelectorAll('.grid');
     grids.forEach((grid) => {
+        grid.classList.remove('clicked');
         grid.removeEventListener('mouseenter', pen);
         grid.removeEventListener('mousedown', penDown);
         grid.removeEventListener('mouseup', penUp);
@@ -130,6 +132,15 @@ colorPicker.addEventListener("change", watchColorPicker);
 
 function watchColorPicker(e) {
     drawColor = `${e.target.value}`;
+    grids.forEach((grid) => {
+        grid.removeEventListener('mouseenter', pen);
+        grid.removeEventListener('mousedown', penDown);
+        grid.removeEventListener('mouseup', penUp);
+        grid.removeEventListener('mouseleave', hover);
+        grid.removeEventListener('mouseenter', eraser);
+        grid.removeEventListener('mousedown', eraserDown);
+        grid.removeEventListener('mouseup', eraserUp);
+    });
 }
 
 // grid size
